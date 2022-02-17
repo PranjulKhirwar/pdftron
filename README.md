@@ -1,5 +1,7 @@
 # pdf_logic_pdftron
 
+A Project to practice PDFtron library with Vue
+
 ## Project setup
 ```
 npm install
