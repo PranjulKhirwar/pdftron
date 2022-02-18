@@ -36,12 +36,13 @@ export default {
 
         //Styling UI
         instance.UI.setFitMode(instance.UI.FitMode.FitWidth);
-        instance.UI.disableElements(['header', 'toolsHeader', 'contextMenuPopup', 'textUnderlineToolButton', 'textSquigglyToolButton', 'textStrikeoutToolButton', 'linkButton', 'annotationCommentButton', 'annotationStyleEditButton', 'annotationCropButton', 'annotationRedactButton', 'annotationGroupButton','annotationUngroupButton', 'calibrateButton', 'fileAttachmentDownload', 'annotationStylePopup', 'printModal']);
+        instance.UI.disableElements(['header', 'toolsHeader', 'contextMenuPopup', 'textUnderlineToolButton', 'textSquigglyToolButton', 'textStrikeoutToolButton', 'copyTextButton', 'linkButton', 'annotationCommentButton', 'annotationStyleEditButton', 'annotationCropButton', 'annotationRedactButton', 'annotationGroupButton','annotationUngroupButton', 'calibrateButton', 'fileAttachmentDownload', 'annotationStylePopup', 'printModal']);
 
         const { Annotations, annotationManager, documentViewer } = instance.Core;
 
         //Source Tagging Logic
         annotationManager.addEventListener('annotationSelected', (annotations, action)=> {
+          instance.UI.disableElement("annotationDeleteButton");
           console.log("////////////////")
           console.log(annotations, {
             coordinates: annotations[0].Jf[0],
@@ -49,8 +50,13 @@ export default {
             content: annotations[0].Hi['trn-annot-preview'] || annotations[0].OS,
             action
           } );
-          console.log('////////////////')
+         console.log('////////////////')
         });
+
+        //Annotation Delete Logic
+        annotationManager.addEventListener('annotationDoubleClicked', ()=>{
+          instance.UI.enableElement("annotationDeleteButton");
+        })
 
         //Higlighting Logic
         documentViewer.addEventListener('documentLoaded', ()=>{
